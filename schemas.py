@@ -13,6 +13,7 @@ Model name is converted to lowercase for the collection name:
 
 from pydantic import BaseModel, Field
 from typing import Optional
+from datetime import date
 
 # Example schemas (replace with your own):
 
@@ -37,6 +38,30 @@ class Product(BaseModel):
     price: float = Field(..., ge=0, description="Price in dollars")
     category: str = Field(..., description="Product category")
     in_stock: bool = Field(True, description="Whether product is in stock")
+
+# Laundry business schemas
+
+class Booking(BaseModel):
+    """
+    Laundry pickup booking requests
+    Collection name: "booking"
+    """
+    name: str = Field(..., description="Customer full name")
+    phone: str = Field(..., description="Contact phone number")
+    address: str = Field(..., description="Pickup address")
+    service_type: str = Field(..., description="Service type e.g., Wash & Fold, Dry Cleaning, Ironing")
+    pickup_date: date = Field(..., description="Preferred pickup date")
+    notes: Optional[str] = Field(None, description="Additional notes")
+    status: str = Field("new", description="Booking status")
+
+class Contact(BaseModel):
+    """
+    General contact messages from website
+    Collection name: "contact"
+    """
+    name: str
+    email: str
+    message: str
 
 # Add your own schemas here:
 # --------------------------------------------------
